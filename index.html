@@ -20,48 +20,54 @@
     .tHeader {padding: 8px; cursor: pointer; text-align: left;}
     .photo {display: inline-block; float: left; width: 100px;}
     #photogrid {overflow: auto;}
+    .label {
+      width:400px;
+      /* font-weight: bold; */
+      padding-right: 4em;
+    }
   </style>
 <body>
   <div class="container">
-    <h1>All Pennies</h1>
-    <input id="fullTableFilter" type="text" placeholder="filter by.."></input>
+    <h1>Personas</h1>
+    <!-- <input id="fullTableFilter" type="text" placeholder="filter by.."></input> -->
     <div id="fullTable"></div>
 
 </div>
 
 <script id="fullTable_template" type="text/html">
   <table>
-    <tr><th class="tHeader">City</th><th class="tHeader">Place Name</th><th class="tHeader">Year</th><th class="tHeader">Image</th></tr>
       {{#rows}}
-        <tr><td>{{city}}</td><td>{{placename}}</td><td>{{year}}</td><td>{{image}}</td></tr>
+        <tr><td class="label">Title of persona</td><td>{{titleofpersona}}</td></tr>
+        <tr><td class="label">Fictional name</td><td>{{fictionalname}}</td></tr>
+        <tr><td class="label">Demographics</td><td>{{demographics}}</td></tr>
+        <tr><td class="label"></td><td><img src="{{linktofictionalphoto}}"/></td></tr>
+        <tr><td class="label">Experience level using your service</td><td>{{experiencelevelusingyourservice}}</td></tr>
+        <tr><td class="label">Do they interact with your service for personal reasons or through their job?</td><td>{{dotheyinteractwithyourserviceforpersonalreasonsorthroughtheirjob}}</td></tr>
+        <tr><td class="label">How often would they use it?</td><td>{{howoftenwouldtheyuseit}}</td></tr>
+        <tr><td class="label">Do they typically use a desktop computer to access it, or their phone or other device?</td><td>{{dotheytypicallyuseadesktopcomputertoaccessitortheirphoneorotherdevice}}</td></tr>
+        <tr><td class="label">What are their main goals when visiting your pages?</td><td>{{whataretheirmaingoalswhenvisitingyourpages}}</td></tr>
+        <tr><td class="label">Quotes to sum up the persona’s attitude</td><td>{{quotestosumupthepersonasattitude}}</td></tr>
       {{/rows}}
   </table>
-</script>
-
-<script id="calTable_template" type="text/html">
-  <table>
-    <tr><th class="tHeader">City</th><th class="tHeader">Place Name</th><th class="tHeader">Year</th><th class="tHeader">Image</th></tr>
-      {{#rows}}
-        <tr><td>{{city}}</td><td>{{placename}}</td><td>{{year}}</td><td>{{image}}</td></tr>
-      {{/rows}}
-  </table>
-</script>
-
-<script id="photogrid" type="text/html">
-  {{#rows}}
-    <div class=""><a href="{{photo-url}}" target="_blank"><img class="photo" src="{{photo-url}}"  alt="name"></a></div>
-  {{/rows}}
 </script>
 
 <script type="text/javascript">
+  function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+      vars[key] = value;
+    });
+    return vars;
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
-    var URL = "0Ao5u1U6KYND7dGN5QngweVJUWE16bTRob0d2a3dCbnc"
+    var URL = getUrlVars()["key"];
     Tabletop.init( { key: URL, callback: showInfo, simpleSheet: true } )
   })
 
   function showInfo(data) {
     var tableOptions = {"data": data
-    , "pagination": 10, "tableDiv": "#fullTable", "filterDiv": "#fullTableFilter"}
+    , "pagination": 1, "tableDiv": "#fullTable", "filterDiv": "#fullTableFilter"}
     Sheetsee.makeTable(tableOptions)
     Sheetsee.initiateTableFilter(tableOptions)
 
